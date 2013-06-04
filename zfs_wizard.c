@@ -6694,7 +6694,7 @@ int execute_cmd(int argc, char **argv)
 }
 
 int main(int argc, char **argv) {
-	printf("executing cmd\n");
+	printf("executing cmd from custom program\n");
 	char *cmd_list[] = {"zfs","list"};
 	int ret = execute_cmd(2, cmd_list);
 	return ret;
