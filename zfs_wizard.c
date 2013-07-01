@@ -6695,7 +6695,48 @@ int execute_cmd(int argc, char **argv)
 
 int main(int argc, char **argv) {
 	printf("executing cmd from custom program\n");
-	char *cmd_list[] = {"zfs","list"};
-	int ret = execute_cmd(2, cmd_list);
+	char **cmd;
+	char name[64];
+	int i;
+	cmd = (char **) malloc(4*sizeof(int));
+	for (i = 0; i < 4; i++) {
+		cmd[i] = (char *)malloc(30*sizeof(char));
+	}
+
+	/* create base snapshot */
+	cmd[0] = "zfs";
+	cmd[1] = "snapshot";
+	cmd[2] = "zroot/usr/home@base";
+	cmd[3] = "";
+	int ret = execute_cmd(3, cmd);
+
+	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot\n");		
+	scanf("%s",name);
+	char str[64];
+	sprintf(str,"zroot/usr/home@%s", name);
+	printf("%s\n", str);
+	cmd[0] = "zfs";
+	cmd[1] = "snapshot";
+	cmd[2] = str;
+	cmd[3] = "";
+	ret = execute_cmd(3, cmd);
+
+	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot\n");		
+	scanf("%s",name);
+	char str[64];
+	sprintf(str,"zroot/usr/home@%s", name);
+	printf("%s\n", str);
+	cmd[0] = "zfs";
+	cmd[1] = "send";
+	cmd[2] = str;
+	cmd[3] = "";
+	ret = execute_cmd(3, cmd);
+
+	/*List snapshot */
+	cmd[0] = "zfs";
+	cmd[1] = "list";
+	cmd[2] = "-t";
+	cmd[3] = "snapshot";
+	ret = execute_cmd(4, cmd);
 	return ret;
 }

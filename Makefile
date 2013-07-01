@@ -2,6 +2,7 @@ PROG=		zfs_wizard
 NO_MAN=		1
 SRCS=		zfs_wizard.c zfs_iter.c zfs_iter.h zfs_util.h
 
+CFLAGS+=	-g
 CFLAGS+=	-I/usr/src/cddl/contrib/opensolaris/lib/libzpool/common
 CFLAGS+=	-I/usr/src/cddl/compat/opensolaris/include
 CFLAGS+=	-I/usr/src/cddl/compat/opensolaris/lib/libumem
@@ -17,7 +18,6 @@ CFLAGS+=	-I/usr/src/sys/cddl/contrib/opensolaris/uts/common/fs/zfs
 CFLAGS+=	-I/usr/src/sys/cddl/contrib/opensolaris/uts/common/sys
 CFLAGS+=	-I/usr/src/sys/cddl/contrib/opensolaris/common/zfs
 CFLAGS+=	-DNEED_SOLARIS_BOOLEAN
-CFLAGS+=	-g
 
 DPADD=		${LIBZFS} ${LIBGEOM} ${LIBBSDXML} ${LIBSBUF} \
 		${LIBM} ${LIBNVPAIR} ${LIBUUTIL} ${LIBUTIL}
