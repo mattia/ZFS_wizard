@@ -6699,7 +6699,7 @@ int main(int argc, char **argv) {
 	char name[64];
 	int i;
 	cmd = (char **) malloc(5*sizeof(int));
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < 5; i++) {
 		cmd[i] = (char *)malloc(30*sizeof(char));
 	}
 
@@ -6709,6 +6709,7 @@ int main(int argc, char **argv) {
 	cmd[2] = "zroot/usr/home@base";
 	cmd[3] = "";
 	cmd[4] = "";
+	cmd[5] = "";
 	int ret = execute_cmd(3, cmd);
 
 	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot per continuare\n");		
@@ -6725,24 +6726,29 @@ int main(int argc, char **argv) {
 	ret = execute_cmd(3, cmd);
 
 	/* Creating diff file */
-	cmd[0] = "zfs";
-	cmd[1] = "send";
-	cmd[2] = "-i";
-	cmd[3] = name;
-	cmd[4] = "zroot/usr/home@base";
+	//cmd[0r = "zfs";
+	//cmd[1] = "send";
+	//cmd[2] = "-i";
+	//cmd[3] = name;
+	//cmd[4] = "zroot/usr/home@base";
+	//cmd[5] = "|";
 	/*Prima di eseguire il comando devo ridirezionare STDOUT su file */
-	int bak, new;
-	fflush(stdout);
-	bak = dup(1);
-	new = open("/tmp/snp1.txt", O_WRONLY);
-	dup2(new, 1);
-	close(new);
-	/* your code here ... */
-	ret = execute_cmd(3, cmd);
-	/*end code */
-	fflush(stdout);
-	dup2(bak, 1);
-	close(bak);
+	//int bak, new;
+	//fflush(stdout);
+	//bak = dup(1);
+	//new = open("/tmp/snp1.txt", O_WRONLY);
+	//dup2(new, 1);
+	//close(new);
+	///* your code here ... */
+	//ret = execute_cmd(5, cmd);
+	///*end code */
+	//fflush(stdout);
+	//dup2(bak, 1);
+	//close(bak);
+	char send_snp[100];
+	sprintf(send_snp,"zfs send -i %s %s > /tmp/snp1.txt","base", str);
+	printf("%s\n",send_snp);
+	system(send_snp);
 
 	/*List snapshot */
 	cmd[0] = "zfs";
