@@ -6698,7 +6698,7 @@ int main(int argc, char **argv) {
 	char **cmd;
 	char name[64];
 	int i;
-	cmd = (char **) malloc(4*sizeof(int));
+	cmd = (char **) malloc(5*sizeof(int));
 	for (i = 0; i < 4; i++) {
 		cmd[i] = (char *)malloc(30*sizeof(char));
 	}
@@ -6708,35 +6708,48 @@ int main(int argc, char **argv) {
 	cmd[1] = "snapshot";
 	cmd[2] = "zroot/usr/home@base";
 	cmd[3] = "";
+	cmd[4] = "";
 	int ret = execute_cmd(3, cmd);
 
-	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot\n");		
+	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot per continuare\n");		
 	scanf("%s",name);
 	char str[64];
 	sprintf(str,"zroot/usr/home@%s", name);
 	printf("%s\n", str);
+	printf("%s\n", name);
 	cmd[0] = "zfs";
 	cmd[1] = "snapshot";
 	cmd[2] = str;
 	cmd[3] = "";
+	cmd[4] = "";
 	ret = execute_cmd(3, cmd);
 
-	printf("Adesso puoi fare modifiche. Inserire il nome del nuovo snapshot\n");		
-	scanf("%s",name);
-	char str[64];
-	sprintf(str,"zroot/usr/home@%s", name);
-	printf("%s\n", str);
+	/* Creating diff file */
 	cmd[0] = "zfs";
 	cmd[1] = "send";
-	cmd[2] = str;
-	cmd[3] = "";
+	cmd[2] = "-i";
+	cmd[3] = name;
+	cmd[4] = "zroot/usr/home@base";
+	/*Prima di eseguire il comando devo ridirezionare STDOUT su file */
+	int bak, new;
+	fflush(stdout);
+	bak = dup(1);
+	new = open("/tmp/snp1.txt", O_WRONLY);
+	dup2(new, 1);
+	close(new);
+	/* your code here ... */
 	ret = execute_cmd(3, cmd);
+	/*end code */
+	fflush(stdout);
+	dup2(bak, 1);
+	close(bak);
 
 	/*List snapshot */
 	cmd[0] = "zfs";
 	cmd[1] = "list";
 	cmd[2] = "-t";
 	cmd[3] = "snapshot";
+	cmd[4] = "";
 	ret = execute_cmd(4, cmd);
 	return ret;
 }
