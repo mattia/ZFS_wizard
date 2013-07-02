@@ -6755,7 +6755,7 @@ int main(int argc, char **argv) {
 	printf("Adesso puoi fare altre modifiche. Inserire il nome del secondo snapshot per continuare\n");
 	scanf("%s",name2);
 	char str2[64];
-	sprintf(str,"zroot/usr/home@%s", name2);
+	sprintf(str2,"zroot/usr/home@%s", name2);
 	printf("%s\n", str2);
 	printf("%s\n", name2);
 	cmd[0] = "zfs";
@@ -6764,8 +6764,8 @@ int main(int argc, char **argv) {
 	cmd[3] = "";
 	cmd[4] = "";
 	ret = execute_cmd(3, cmd);
-
-	sprintf(send_snp,"zfs send -i %s %s > /tmp/snp2.txt","base", str2);
+	//char send_snp2[100];
+	sprintf(send_snp,"zfs send -i %s %s > /tmp/snp2.txt", name, str2);
 	printf("%s\n",send_snp);
 	system(send_snp);
 
