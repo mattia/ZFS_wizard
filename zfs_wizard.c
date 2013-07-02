@@ -6697,6 +6697,7 @@ int main(int argc, char **argv) {
 	printf("executing cmd from custom program\n");
 	char **cmd;
 	char name[64];
+	char name2[64];
 	int i;
 	cmd = (char **) malloc(5*sizeof(int));
 	for (i = 0; i < 5; i++) {
@@ -6749,6 +6750,25 @@ int main(int argc, char **argv) {
 	sprintf(send_snp,"zfs send -i %s %s > /tmp/snp1.txt","base", str);
 	printf("%s\n",send_snp);
 	system(send_snp);
+
+	/* Creo secondo snapshot */
+	printf("Adesso puoi fare altre modifiche. Inserire il nome del secondo snapshot per continuare\n");
+	scanf("%s",name2);
+	char str2[64];
+	sprintf(str,"zroot/usr/home@%s", name2);
+	printf("%s\n", str2);
+	printf("%s\n", name2);
+	cmd[0] = "zfs";
+	cmd[1] = "snapshot";
+	cmd[2] = str2;
+	cmd[3] = "";
+	cmd[4] = "";
+	ret = execute_cmd(3, cmd);
+
+	sprintf(send_snp,"zfs send -i %s %s > /tmp/snp2.txt","base", str2);
+	printf("%s\n",send_snp);
+	system(send_snp);
+
 
 	/*List snapshot */
 	cmd[0] = "zfs";
