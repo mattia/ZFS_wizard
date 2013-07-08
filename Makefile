@@ -30,6 +30,6 @@ LDADD=		-lzfs -lgeom -lbsdxml -lsbuf \
 clean: myclean
 
 myclean:
-.if exists(test.core)
-	-rm test.core
+.if exists(zfs_wizard.core)
+	-rm zfs_wizard.core
 .endif

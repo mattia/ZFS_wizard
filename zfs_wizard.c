@@ -6694,7 +6694,7 @@ int execute_cmd(int argc, char **argv)
 }
 
 int main(int argc, char **argv) {
-	printf("executing cmd from custom program\n");
+
 	char **cmd;
 	char name[64];
 	char name2[64];
@@ -6717,8 +6717,6 @@ int main(int argc, char **argv) {
 	scanf("%s",name);
 	char str[64];
 	sprintf(str,"zroot/usr/home@%s", name);
-	printf("%s\n", str);
-	printf("%s\n", name);
 	cmd[0] = "zfs";
 	cmd[1] = "snapshot";
 	cmd[2] = str;
