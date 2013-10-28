@@ -6775,5 +6775,10 @@ int main(int argc, char **argv) {
 	cmd[3] = "snapshot";
 	cmd[4] = "";
 	ret = execute_cmd(4, cmd);
+	
+	for (i = 0; i < 5; i++) {
+		free(cmd[i]);
+		//cmd[i] = (char *)malloc(30*sizeof(char));
+	}
 	return ret;
 }
